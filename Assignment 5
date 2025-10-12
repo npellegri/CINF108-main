@@ -1,0 +1,146 @@
+from typing import List
+
+# 1. Sum of positive numbers in a list
+def sum_positive(nums: List[float]) -> float:
+    return sum(x for x in nums if x > 0)
+
+# 2. Palindrome check (letters/digits, case-insensitive)
+def is_palindrome(s: str) -> bool:
+    stripped = ''.join(ch.lower() for ch in s if ch.isalnum())
+    return stripped == stripped[::-1]
+
+# 3. Factorial using recursion
+def factorial_recursive(n: int) -> int:
+    if n < 0:
+        raise ValueError("n must be non-negative")
+    if n in (0, 1):
+        return 1
+    return n * factorial_recursive(n - 1)
+
+# 4. Square each element in a list
+def squares(lst: List[float]) -> List[float]:
+    return [x * x for x in lst]
+
+# 5. Even or Odd
+def even_or_odd(n: int) -> str:
+    return "Even" if n % 2 == 0 else "Odd"
+
+# 6. Area of a triangle (base * height / 2)
+def triangle_area(base: float, height: float) -> float:
+    if base < 0 or height < 0:
+        raise ValueError("base and height must be non-negative")
+    return (base * height) / 2.0
+
+# 7. Sort a list of strings alphabetically
+def sort_strings(strings: List[str]) -> List[str]:
+    return sorted(strings, key=str.lower)
+
+# 8. Intersection of two lists (preserve unique common elements)
+def list_intersection(a: List, b: List):
+    return list(dict.fromkeys([x for x in a if x in set(b)]))
+
+# 9. Leap year check (Gregorian rules)
+def is_leap_year(year: int) -> bool:
+    if year % 400 == 0:
+        return True
+    if year % 100 == 0:
+        return False
+    return year % 4 == 0
+
+# 10. Multiplication table for a number (1..up_to) as list of strings
+def multiplication_table(n: int, up_to: int = 12) -> List[str]:
+    if up_to < 1:
+        raise ValueError("up_to must be >= 1")
+    return [f"{n} x {i} = {n*i}" for i in range(1, up_to + 1)]
+
+# --- Helpers for interactive verification ---
+def _menu():
+    print("Select an exercise (1-10) or 0 to quit:")
+    items = [
+        "Sum of positive numbers",
+        "Palindrome check",
+        "Factorial (recursive)",
+        "Squares of a list",
+        "Even or Odd",
+        "Triangle area",
+        "Sort strings alphabetically",
+        "Intersection of two lists",
+        "Leap year check",
+        "Multiplication table",
+    ]
+    for i, name in enumerate(items, 1):
+        print(f"{i}. {name}")
+    choice = input("> ").strip()
+    return int(choice or "0")
+
+def _prompt_list(prompt: str):
+    raw = input(prompt + " (comma-separated): ")
+    return [x.strip() for x in raw.split(",") if x.strip()]
+
+def run_menu():
+    while True:
+        try:
+            c = _menu()
+        except ValueError:
+            print("Enter a number 0-10.")
+            continue
+        if c == 0:
+            print("Bye.")
+            break
+        try:
+            if c == 1:
+                nums = [float(x) for x in _prompt_list("Enter numbers")]
+                print("Sum of positives:", sum_positive(nums))
+            elif c == 2:
+                s = input("Enter a string: ")
+                print("Palindrome:", is_palindrome(s))
+            elif c == 3:
+                n = int(input("Enter n: "))
+                print("Factorial:", factorial_recursive(n))
+            elif c == 4:
+                nums = [float(x) for x in _prompt_list("Enter numbers")]
+                print("Squares:", squares(nums))
+            elif c == 5:
+                n = int(input("Enter integer: "))
+                print(even_or_odd(n))
+            elif c == 6:
+                b = float(input("Base: "))
+                h = float(input("Height: "))
+                print("Area:", triangle_area(b, h))
+            elif c == 7:
+                items = _prompt_list("Enter strings")
+                print("Sorted:", sort_strings(items))
+            elif c == 8:
+                a = _prompt_list("List A")
+                b = _prompt_list("List B")
+                print("Intersection:", list_intersection(a, b))
+            elif c == 9:
+                y = int(input("Year: "))
+                print("Leap year:", is_leap_year(y))
+            elif c == 10:
+                n = int(input("Number: "))
+                up = int(input("Up to (default 12): ") or "12")
+                print("\n".join(multiplication_table(n, up)))
+        except Exception as e:
+            print("Error:", e)
+
+def _demos():
+    print("DEMO OUTPUTS")
+    print("1) sum_positive([-2, 3, 5, -1, 10]) ->", sum_positive([-2, 3, 5, -1, 10]))
+    print("2) is_palindrome('Racecar!') ->", is_palindrome("Racecar!"))
+    print("3) factorial_recursive(5) ->", factorial_recursive(5))
+    print("4) squares([1, 2, 3]) ->", squares([1, 2, 3]))
+    print("5) even_or_odd(7) ->", even_or_odd(7))
+    print("6) triangle_area(10, 6) ->", triangle_area(10, 6))
+    print("7) sort_strings(['Ada', 'lovelace', 'Turing']) ->", sort_strings(['Ada', 'lovelace', 'Turing']))
+    print("8) list_intersection([1,2,2,3], [2,3,4]) ->", list_intersection([1,2,2,3], [2,3,4]))
+    print("9) is_leap_year(2000), is_leap_year(1900), is_leap_year(2024) ->",
+          is_leap_year(2000), is_leap_year(1900), is_leap_year(2024))
+    print("10) multiplication_table(5, 5) ->", "\n" + "\n".join(multiplication_table(5, 5)))
+
+if __name__ == "__main__":
+    import sys
+    if "--menu" in sys.argv:
+        run_menu()
+    else:
+        _demos()
