@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Alice Doe",
+    "email": "alice@example.com",
+    "purchases": [
+      {
+        "item": "Book",
+        "amount": 19.99
+      },
+      {
+        "item": "Notebook",
+        "amount": 4.5
+      }
+    ]
+  },
+  {
+    "name": "Bob Ray",
+    "email": "bob@example.com",
+    "purchases": [
+      {
+        "item": "Headphones",
+        "amount": 59.95
+      }
+    ]
+  }
+]
